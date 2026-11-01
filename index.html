@@ -1,0 +1,133 @@
+<div class="ife-wrapper" id="imageFragmentEditor">
+
+  <div class="ife-step" id="stepUpload">
+    <div class="ife-drop-zone" id="dropZone">
+      <div class="ife-drop-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17 8 12 3 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+      </div>
+      <p class="ife-drop-title">Arraste uma imagem aqui</p>
+      <p class="ife-drop-sub">ou clique para selecionar</p>
+      <input type="file" id="fileInput" accept="image/*" hidden />
+      <button type="button" class="ife-btn ife-btn--primary" id="btnSelect">Selecionar imagem</button>
+    </div>
+  </div>
+
+  <div class="ife-step ife-step--hidden" id="stepEdit">
+    <div class="ife-toolbar">
+      <div class="ife-toolbar__left">
+        <span class="ife-file-name" id="fileName"></span>
+      </div>
+      <div class="ife-toolbar__right">
+        <button type="button" class="ife-btn ife-btn--ghost" id="btnReset">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4"/></svg>
+          Nova imagem
+        </button>
+      </div>
+    </div>
+
+    <div class="ife-editor-body">
+      <div class="ife-canvas-area">
+        <div class="ife-crop-container">
+          <img id="cropImage" alt="Imagem para editar" />
+        </div>
+      </div>
+
+      <div class="ife-panel">
+
+        <section class="ife-panel__section">
+          <h4 class="ife-panel__title">Recorte</h4>
+          <div class="ife-ratio-grid">
+            <button type="button" class="ife-ratio-btn active" data-ratio="NaN">Livre</button>
+            <button type="button" class="ife-ratio-btn" data-ratio="1">1:1</button>
+            <button type="button" class="ife-ratio-btn" data-ratio="1.7778">16:9</button>
+            <button type="button" class="ife-ratio-btn" data-ratio="1.3333">4:3</button>
+            <button type="button" class="ife-ratio-btn" data-ratio="0.5625">9:16</button>
+            <button type="button" class="ife-ratio-btn" data-ratio="0.75">3:4</button>
+          </div>
+        </section>
+
+        <section class="ife-panel__section">
+          <h4 class="ife-panel__title">Dimensões de saída</h4>
+          <div class="ife-row">
+            <div class="ife-field">
+              <label class="ife-label">Largura (px)</label>
+              <input class="ife-input" type="number" id="outWidth" placeholder="Auto" min="1" max="4000" />
+            </div>
+            <div class="ife-field">
+              <label class="ife-label">Altura (px)</label>
+              <input class="ife-input" type="number" id="outHeight" placeholder="Auto" min="1" max="4000" />
+            </div>
+          </div>
+          <label class="ife-checkbox">
+            <input type="checkbox" id="keepRatio" checked />
+            <span>Manter proporção</span>
+          </label>
+        </section>
+
+        <section class="ife-panel__section">
+          <h4 class="ife-panel__title">Qualidade &amp; Formato</h4>
+          <div class="ife-field">
+            <label class="ife-label">Formato de saída</label>
+            <select class="ife-input" id="outFormat">
+              <option value="image/jpeg">JPEG</option>
+              <option value="image/webp">WebP</option>
+              <option value="image/png">PNG (sem perdas)</option>
+            </select>
+          </div>
+          <div class="ife-field" id="qualityField">
+            <label class="ife-label">Qualidade: <span id="qualityVal">85</span>%</label>
+            <input class="ife-range" type="range" id="outQuality" min="10" max="100" value="85" />
+          </div>
+          <div class="ife-badge" id="stripBadge">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            Metadados EXIF removidos automaticamente
+          </div>
+        </section>
+
+        <section class="ife-panel__section">
+          <h4 class="ife-panel__title">Salvar no Documents &amp; Media</h4>
+          <div class="ife-field">
+            <label class="ife-label">Nome do arquivo</label>
+            <input class="ife-input" type="text" id="outFileName" placeholder="minha-imagem" />
+          </div>
+
+          <div class="ife-preview-info" id="previewInfo">
+            <span id="infoSize">–</span> &nbsp;·&nbsp; <span id="infoDims">–</span>
+          </div>
+        </section>
+
+        <div class="ife-actions">
+          <button type="button" class="ife-btn ife-btn--secondary" id="btnPreview">Pré-visualizar</button>
+          <button type="button" class="ife-btn ife-btn--primary" id="btnSave">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Salvar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ife-modal ife-step--hidden" id="modalPreview">
+    <div class="ife-modal__backdrop" id="modalBackdrop"></div>
+    <div class="ife-modal__box">
+      <div class="ife-modal__header">
+        <span>Pré-visualização</span>
+        <button type="button" class="ife-modal__close" id="btnCloseModal">✕</button>
+      </div>
+      <div class="ife-modal__body">
+        <img id="previewImg" alt="Pré-visualização" />
+      </div>
+      <div class="ife-modal__footer">
+        <span id="modalInfo"></span>
+        <button type="button" class="ife-btn ife-btn--primary" id="btnSaveFromModal">Salvar no Documents &amp; Media</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="ife-toast" id="toast"></div>
+
+</div>

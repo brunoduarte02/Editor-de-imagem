@@ -1,0 +1,7 @@
+{
+  "name": "Editor de Imagem",
+  "type": "component",
+  "cssPath": "index.css",
+  "htmlPath": "index.html",
+  "jsPath": "index.js"
+}
